@@ -7,7 +7,6 @@ public class Main
 
 	public static void main(String[] args)
 	{
-
 		/*recupérer les informations*/
 		/*construire le graphe*/
 		/*effectuer les calculs demander*/
@@ -16,6 +15,7 @@ public class Main
 		int nb = getLineNumber(fname);
 		Graph g = new Graph(fname, nb);
 	}
+
 
 	/* INUTILE pour le rendu vu que l'on a le nombre de ligne en parametre normalement*/
 	private static int getLineNumber(String fname) {
