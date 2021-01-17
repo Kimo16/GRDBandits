@@ -23,8 +23,12 @@ public class Graph
 		this.to = new int[estimNbAretes];
 
 		retrieveVertices(fname,estimNbAretes);
-		
+
 		this.edges = buildEdgesArray();
+		for(int i = 0 ; i < edges.length ; i++ )
+		{
+			System.out.println(edges[i]);
+		}
 		this.adja = new byte[edges.length + 1][edges.length + 1];
 
 		buildAdjacencyList();
@@ -48,7 +52,7 @@ public class Graph
 			File myObj = new File(fname);
 			Scanner myReader = new Scanner(myObj);
 			
-			while (myReader.hasNextLine() && cpt < estimNbAretes ) {
+			while (myReader.hasNextLine() && cpt <= estimNbAretes ) {
 				String[] data = myReader.nextLine().split("\t+", 2);
 
 				if( data[0].contains("#")) {
@@ -74,7 +78,7 @@ public class Graph
 	private int[] buildEdgesArray() {
 		
 		int[] all = new int[from.length + to.length];
-		System.arraycopy(to, 0, all, 0, from.length);
+		System.arraycopy(from, 0, all, 0, from.length);
 		System.arraycopy(to, 0, all, from.length, to.length);
 	
 		int [] edgesWithOutDup = Arrays.stream(all).distinct().toArray();
@@ -105,11 +109,12 @@ public class Graph
 
 		for(int i = 0 ; i < from.length ; i ++ )
 		{
-			
+			System.out.println( "from : " + from[i]);
+			System.out.println( "to : " + to[i]);
 			int edge_1 = searchEdgeIndex(from[i]);
 			int edge_2 = searchEdgeIndex(to[i]);
 
-			adja[edge_1][edge_1] = 1; 
+			adja[edge_1][edge_2] = 1; 
 			adja[edge_2][edge_1] = 1;  
 		}
 	}
