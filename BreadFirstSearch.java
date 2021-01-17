@@ -16,9 +16,9 @@ public class BreadFirstSearch
 	public BreadFirstSearch(Graph graph)
 	{
 		this.graph 		= graph; 
-		this.colors 	= new byte[graph.nbEdges + 1];
-		this.distances 	= new int[graph.nbEdges  + 1];
-		this.origins   	= new int[graph.nbEdges  + 1];
+		this.colors 	= new byte[graph.maxEdgeId + 1];
+		this.distances 	= new int[graph.maxEdgeId  + 1];
+		this.origins   	= new int[graph.maxEdgeId  + 1];
 		this.fifo 		= new ArrayDeque<Integer>();
 	}
 
@@ -47,7 +47,6 @@ public class BreadFirstSearch
 		while( ! fifo.isEmpty() )
 		{
 			int currentEdge = fifo.pollFirst();
-			System.out.println("current edge : "+ currentEdge);
 			if( currentEdge == endEgde ) 
 			{
 				break; 
@@ -55,11 +54,8 @@ public class BreadFirstSearch
 			
 			for(int i = 0 ; i < graph.adja[currentEdge].length ; i ++ )
 			{
-				System.out.println("test neigh");
-				System.out.println( "currentEdge : "+ currentEdge + " test neigh : "+ graph.adja[currentEdge][i]  );
 				if(colors[ i] == WHITE && graph.adja[currentEdge][i] == 1 )
 				{
-					System.out.println("ok neigh");
 					colors[ i ]	 = GRAY;
 					distances [ i ] = distances[ currentEdge ] + 1;
 					origins [ i ]	 = currentEdge;
@@ -68,11 +64,6 @@ public class BreadFirstSearch
 			}
 
 			colors[ currentEdge ] = BLACK;
-		}
-
-		for(int i = 0 ; i < distances.length ; i ++ )
-		{
-			System.out.println(distances[i] + " ");
 		}
 
 		graph.print_adjacency_list();

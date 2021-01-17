@@ -9,7 +9,7 @@ public class Graph
 
 	int nbEdges; 
 	int nbVertex;
-
+	int maxEdgeId;
 	int []from;
 	int []to;
 
@@ -20,10 +20,15 @@ public class Graph
 
 		from = new int[estimNbAretes];
 		to = new int[estimNbAretes];
-
+		maxEdgeId = 0;
 		retrieveVertices(fname);
-		getNumEdge();
+		//nbEdges = getNumEdge();
 		build_adjacency_list();
+	}
+	private void letcure() {
+		for(int i = 0; i < from.length; i++) {
+			System.out.println(from[i] +" --> " + to[i]);
+		}
 	}
 
 	private void retrieveVertices(String fname) 
@@ -39,10 +44,20 @@ public class Graph
 				if( data[0].contains("#")) {
 					continue;
 				}
-				from[cpt] = Integer.valueOf(data[0]);
-				to[cpt++] = Integer.valueOf(data[1]);
 				
+
+				from[cpt] = Integer.valueOf(data[0]);
+				to[cpt] = Integer.valueOf(data[1]);
+			
+				if(Integer.valueOf(data[0]) > maxEdgeId) {
+					maxEdgeId = Integer.valueOf(data[0]);
+				}
+				if(Integer.valueOf(data[1]) > maxEdgeId) {
+					maxEdgeId = Integer.valueOf(data[1]);
+				}
+				cpt ++;
 			}
+			
 			myReader.close();
 
 	    } catch (Exception e) 
@@ -52,23 +67,22 @@ public class Graph
 	    }
 	}
 
-	private long getNumEdge() {
+	/*
+	private int getNumEdge() {
 		
 		int[] all = new int[from.length + to.length];
 		System.arraycopy(to, 0, all, 0, from.length);
 		System.arraycopy(to, 0, all, from.length, to.length);
 		
-		System.out.println("all length: "+ all.length);
 		
-		long number = Arrays.stream(all).distinct().count();
-		System.out.println("distinct count : "+ number);
+		int number =(int) Arrays.stream(all).distinct().count();
 		return number;
+	}*/
 
-	}
 
 
 	public void build_adjacency_list(){
-		adja = new int[nbEdges + 1][nbEdges + 1];
+		adja = new int[maxEdgeId + 1][maxEdgeId + 1];
 
 		for(int i = 0 ; i < from.length ; i ++ )
 		{
