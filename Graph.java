@@ -15,7 +15,8 @@ public class Graph
 	int [] from;
 	int [] to;
 	int [] edges;
-	byte[][] adja;
+	int [] neighboors;
+	int [] indexInNeighboors;
 
 	public Graph(String fname, int estimNbAretes)
 	{
@@ -29,12 +30,14 @@ public class Graph
 		mem();
 
 		this.edges = buildEdgesArray();
-		this.adja = new byte[edges.length + 1][edges.length + 1];
+		this.nbEdges = edges.length;
+		//this.adja = new byte[edges.length + 1][edges.length + 1];
+		this.neighboors = new int[nbVertex * 2 + nbEdges + 1 ];
+		this.indexInNeighboors = new int[nbEdges + 1];
+
 		buildAdjacencyList();
 
 		mem();
-		
-		this.maxDegree = getMaxDegree();
 	}
 
 	private void letcure() {
@@ -96,7 +99,7 @@ public class Graph
 		System.arraycopy(to, 0, all, from.length, to.length);
 	
 		int [] edgesWithOutDup = Arrays.stream(all).distinct().toArray();
-	
+		
 		return edgesWithOutDup;
 	
 	}
@@ -115,22 +118,49 @@ public class Graph
 	}
 
 	public void buildAdjacencyList(){
+		int currentVertex = -1; 
+		int counterNeighboors = 0; 
+		int maxCounterDegree = 0 ;
+		int counterDegree = 0 ; 
 
 		for(int i = 0 ; i < from.length ; i ++ )
 		{
-	
-			int edge_1 = searchEdgeIndex(from[i]);
-			int edge_2 = searchEdgeIndex(to[i]);
+
+			int f = searchEdgeIndex(from[i]);
+			int t = searchEdgeIndex(to[i]);
 			
-			if(edge_1 != -1 || edge_2 != -1)
+
+			if( currentVertex != f )
 			{
-				adja[edge_1][edge_2] = 1; 
-				adja[edge_2][edge_1] = 1;  
+				currentVertex = f; 
+
+				if (counterDegree > maxCounterDegree )
+				{
+					maxCounterDegree = counterDegree; 
+				}
+
+				neighboors[counterNeighboors] = currentVertex; 
+				indexInNeighboors[currentVertex] = counterNeighboors;
+				counterDegree = 0 ;  
+				
+
+			}else{
+				neighboors[counterNeighboors] = t; 
+				counterDegree += 1; 
 			}
+
+			counterNeighboors += 1 ; 
+				
+			/*if(from != -1 || to != -1)
+			{
+				adja[from][to] = 1; 
+				adja[edge_2][edge_1] = 1;  
+			}*/
 		}
+		this.maxDegree = maxCounterDegree; 
 	}
 
-	public int getMaxDegree()
+	/*public int getMaxDegree()
 	{
 		int maxDegree = 0 ;
 		
@@ -153,9 +183,9 @@ public class Graph
 		}
 
 		return maxDegree;
-	}
+	}*/
 
-	public void print_adjacency_list()
+	/*public void print_adjacency_list()
 	{
 		for(int i = 0 ; i < adja.length ; i ++)
 		{	
@@ -170,7 +200,7 @@ public class Graph
 			}
 			System.out.println();
 		}
-	}
+	}*/
 
 	public static void mem() {
 		Runtime rt = Runtime.getRuntime();

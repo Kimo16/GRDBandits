@@ -10,14 +10,14 @@ public class Main
 		/*construire le graphe*/
 		/*effectuer les calculs demander*/
 
-		String fname = "Archives/CA-AstroPh.txt";
+		String fname = "Archives/as20000102.txt";
 		int nb = getLineNumber(fname);
-		Graph g = new Graph(fname, 400000);
+		Graph g = new Graph(fname, 14000);
 		BreadFirstSearch bfs = new BreadFirstSearch(g);
 		System.out.println("n="+g.maxEdgeId);
 		System.out.println("m="+g.nbVertex);
 		System.out.println("degmax=" + g.maxDegree);
-		System.out.println("dist=" + bfs.breadFirstAlgorithm(127393,1));
+		System.out.println("dist=" + bfs.breadFirstAlgorithm(1,1000));
 	}
 
 

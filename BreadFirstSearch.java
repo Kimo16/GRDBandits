@@ -54,13 +54,17 @@ public class BreadFirstSearch
 				break; 
 			}
 			
-			for(int i = 0 ; i < graph.adja[currentEdge].length ; i ++ )
+			int start = graph.indexInNeighboors[currentEdge] + 1;
+			int end   = graph.indexInNeighboors[currentEdge + 1];
+
+			for(int i = start ; i < end ; i ++ )
 			{
-				if(colors[ i] == WHITE && graph.adja[currentEdge][i] == 1 )
+				int neighboor = graph.neighboors[i];
+				if(colors[ neighboor ] == WHITE )
 				{
-					colors[ i ]	 	= GRAY;
-					distances [ i ] = distances[ currentEdge ] + 1;
-					fifo.add( i ); 
+					colors[ neighboor ]	 	= GRAY;
+					distances [ neighboor ] = distances[ currentEdge ] + 1;
+					fifo.add( neighboor ); 
 				}
 			}
 
