@@ -4,16 +4,18 @@ import java.io.InputStreamReader;
 public class Main
 {
 
-
 	public static void main(String[] args)
 	{
 		/*recupérer les informations*/
 		/*construire le graphe*/
 		/*effectuer les calculs demander*/
 
-		String fname = "as20000102.txt";
+		String fname = "Archives/CA-AstroPh.txt";
 		int nb = getLineNumber(fname);
-		Graph g = new Graph(fname, nb);
+		Graph g = new Graph(fname, 1000);
+		BreadFirstSearch bfs = new BreadFirstSearch(g);
+		System.out.println(bfs.breadFirstAlgorithm(127393,57507));
+		System.out.println(g.maxDegree);
 	}
 
 
