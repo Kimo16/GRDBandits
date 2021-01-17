@@ -25,16 +25,14 @@ public class Graph
 		this.maxEdgeId = 0 ;
 		this.nbVertex = 0; 
 		retrieveVertices(fname,estimNbAretes);
+		
+		mem();
 
 		this.edges = buildEdgesArray();
-
-		/*for(int i = 0 ; i < edges.length ; i++ )
-		{
-			System.out.println(edges[i]);
-		}*/
 		this.adja = new byte[edges.length + 1][edges.length + 1];
-
 		buildAdjacencyList();
+
+		mem();
 		
 		this.maxDegree = getMaxDegree();
 	}
@@ -78,7 +76,7 @@ public class Graph
 
 				cpt ++;
 			}
-			
+
 			maxEdgeId += 1 ; 
 
 			myReader.close();
@@ -98,10 +96,9 @@ public class Graph
 		System.arraycopy(to, 0, all, from.length, to.length);
 	
 		int [] edgesWithOutDup = Arrays.stream(all).distinct().toArray();
-
+	
 		return edgesWithOutDup;
-		//int number =(int) Arrays.stream(all).distinct().count();
-		//return number;
+	
 	}
 
 	public int searchEdgeIndex( int edgeID)
@@ -173,5 +170,12 @@ public class Graph
 			}
 			System.out.println();
 		}
+	}
+
+	public static void mem() {
+		Runtime rt = Runtime.getRuntime();
+		rt.gc();
+		System.err.println("Allocated memory : "+ (rt.totalMemory() - rt.freeMemory()) / 1000000 + " Mb");
+		System.err.flush();
 	}
 }
