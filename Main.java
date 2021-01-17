@@ -12,10 +12,12 @@ public class Main
 
 		String fname = "Archives/CA-AstroPh.txt";
 		int nb = getLineNumber(fname);
-		Graph g = new Graph(fname, 1000);
+		Graph g = new Graph(fname, 400000);
 		BreadFirstSearch bfs = new BreadFirstSearch(g);
-		System.out.println(bfs.breadFirstAlgorithm(127393,57507));
-		System.out.println(g.maxDegree);
+		System.out.println("n="+g.maxEdgeId);
+		System.out.println("m="+g.nbVertex);
+		System.out.println("degmax=" + g.maxDegree);
+		System.out.println("dist=" + bfs.breadFirstAlgorithm(127393,1));
 	}
 
 

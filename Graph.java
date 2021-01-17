@@ -10,6 +10,7 @@ public class Graph
 	int nbEdges; 
 	int nbVertex;
 	int maxDegree; 
+	int maxEdgeId; 
 
 	int [] from;
 	int [] to;
@@ -21,14 +22,16 @@ public class Graph
 
 		this.from = new int[estimNbAretes];
 		this.to = new int[estimNbAretes];
-
+		this.maxEdgeId = 0 ;
+		this.nbVertex = 0; 
 		retrieveVertices(fname,estimNbAretes);
 
 		this.edges = buildEdgesArray();
-		for(int i = 0 ; i < edges.length ; i++ )
+
+		/*for(int i = 0 ; i < edges.length ; i++ )
 		{
 			System.out.println(edges[i]);
-		}
+		}*/
 		this.adja = new byte[edges.length + 1][edges.length + 1];
 
 		buildAdjacencyList();
@@ -47,24 +50,37 @@ public class Graph
 		try 
 		{
 			int cpt =0;
-			int cpt_vertex = 0 ; 
 
 			File myObj = new File(fname);
 			Scanner myReader = new Scanner(myObj);
 			
-			while (myReader.hasNextLine() && cpt <= estimNbAretes ) {
+			while (myReader.hasNextLine() && cpt < estimNbAretes ) {
 				String[] data = myReader.nextLine().split("\t+", 2);
 
 				if( data[0].contains("#")) {
 					continue;
 				}
 
+				nbVertex += 1; 
+
 				from[cpt] = Integer.valueOf(data[0]);
 				to[cpt] = Integer.valueOf(data[1]);
+
+				if(from[cpt] > maxEdgeId )
+				{
+					maxEdgeId = from[cpt];
+				}
+
+				if(to[cpt] > maxEdgeId )
+				{
+					maxEdgeId = to[cpt];
+				}
 
 				cpt ++;
 			}
 			
+			maxEdgeId += 1 ; 
+
 			myReader.close();
 
 	    } catch (Exception e) 
@@ -92,10 +108,6 @@ public class Graph
 	{
 		for(int i = 0 ; i < edges.length ; i++ )
 		{
-			if( edges[i] == 0 )
-			{
-				return -1 ; 
-			}
 			if( edgeID == edges[i] )
 			{
 				return i;
@@ -109,13 +121,15 @@ public class Graph
 
 		for(int i = 0 ; i < from.length ; i ++ )
 		{
-			System.out.println( "from : " + from[i]);
-			System.out.println( "to : " + to[i]);
+	
 			int edge_1 = searchEdgeIndex(from[i]);
 			int edge_2 = searchEdgeIndex(to[i]);
-
-			adja[edge_1][edge_2] = 1; 
-			adja[edge_2][edge_1] = 1;  
+			
+			if(edge_1 != -1 || edge_2 != -1)
+			{
+				adja[edge_1][edge_2] = 1; 
+				adja[edge_2][edge_1] = 1;  
+			}
 		}
 	}
 

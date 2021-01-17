@@ -8,7 +8,6 @@ public class BreadFirstSearch
 	private static final byte BLACK = 2;
 
 	private byte[] colors ; 
-	private int[] origins; 
 	private int[] distances; 
 	private Graph graph;
 	private ArrayDeque<Integer> fifo; 
@@ -18,7 +17,6 @@ public class BreadFirstSearch
 		this.graph 		= graph; 
 		this.colors 	= new byte[graph.edges.length + 1];
 		this.distances 	= new int[graph.edges.length  + 1];
-		this.origins   	= new int[graph.edges.length  + 1];
 		this.fifo 		= new ArrayDeque<Integer>();
 	}
 
@@ -26,9 +24,13 @@ public class BreadFirstSearch
 
 	public int breadFirstAlgorithm( int originEdge , int endEgde )
 	{
+		if ( graph.searchEdgeIndex(endEgde) == -1 )
+		{
+			return Integer.MAX_VALUE;
+		}
+	
 		originEdge = graph.searchEdgeIndex(originEdge);
 		colors[originEdge] = GRAY;
-		origins[originEdge] = -1 ; 
 	
 		/*initialise data for every edges except the origin*/
 
@@ -37,7 +39,6 @@ public class BreadFirstSearch
 			if ( i != originEdge )
 			{
 				distances[i] = Integer.MAX_VALUE;
-				origins[i] = -1; 
 				colors[i] = WHITE;
 			}
 			
@@ -57,9 +58,8 @@ public class BreadFirstSearch
 			{
 				if(colors[ i] == WHITE && graph.adja[currentEdge][i] == 1 )
 				{
-					colors[ i ]	 = GRAY;
+					colors[ i ]	 	= GRAY;
 					distances [ i ] = distances[ currentEdge ] + 1;
-					origins [ i ]	 = currentEdge;
 					fifo.add( i ); 
 				}
 			}
