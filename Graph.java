@@ -123,20 +123,25 @@ public class Graph
 		int maxCounterDegree = 0 ;
 		int counterDegree = 0 ; 
 
+		int [] tabMaxDeg = new int [from.length] ;
+
 		for(int i = 0 ; i < from.length ; i ++ )
 		{
 
 			int f = searchEdgeIndex(from[i]);
 			int t = searchEdgeIndex(to[i]);
-			
 
 			if( currentVertex != f )
 			{
 				currentVertex = f; 
 
+				tabMaxDeg[t] += 1 ;
+
 				if (counterDegree > maxCounterDegree )
 				{
 					maxCounterDegree = counterDegree; 
+					
+					tabMaxDeg[t] += 1 ;
 				}
 
 				neighboors[counterNeighboors] = currentVertex; 
@@ -146,6 +151,7 @@ public class Graph
 
 			}else{
 				neighboors[counterNeighboors] = t; 
+				tabMaxDeg[currentVertex] += 1 ;
 				counterDegree += 1; 
 			}
 
@@ -157,7 +163,13 @@ public class Graph
 				adja[edge_2][edge_1] = 1;  
 			}*/
 		}
-		this.maxDegree = maxCounterDegree; 
+
+		//this.maxDegree = maxCounterDegree; 
+
+		for ( int i : tabMaxDeg ){
+			if ( i > this.maxDegree )
+				this.maxDegree = i ;
+		}
 	}
 
 	/*public int getMaxDegree()
