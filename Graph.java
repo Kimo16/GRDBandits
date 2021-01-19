@@ -1,7 +1,7 @@
 import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
-
+import java.util.LinkedList;
 
 public class Graph
 {
@@ -15,8 +15,7 @@ public class Graph
 	int [] from;
 	int [] to;
 	int [] edges;
-	int [] neighboors;
-	int [] indexInNeighboors;
+	LinkedList<Integer>[] adjacencyList;
 
 	public Graph(String fname, int estimNbAretes)
 	{
@@ -32,9 +31,9 @@ public class Graph
 		this.edges = buildEdgesArray();
 		this.nbEdges = edges.length;
 		//this.adja = new byte[edges.length + 1][edges.length + 1];
-		this.neighboors = new int[nbVertex * 2 + nbEdges + 1 ];
-		this.indexInNeighboors = new int[nbEdges + 1];
-
+		//this.neighboors = new int[nbVertex * 2 + nbEdges + 1 ];
+		//this.indexInNeighboors = new int[nbEdges + 1];
+		this.adjacencyList = new LinkedList[nbEdges];
 		buildAdjacencyList();
 
 		mem();
@@ -130,32 +129,15 @@ public class Graph
 
 			int f = searchEdgeIndex(from[i]);
 			int t = searchEdgeIndex(to[i]);
-
-			if( currentVertex != f )
-			{
+			if(currentVertex != f ){
 				currentVertex = f; 
-
-				tabMaxDeg[t] += 1 ;
-
-				if (counterDegree > maxCounterDegree )
-				{
-					maxCounterDegree = counterDegree; 
-					
-					tabMaxDeg[t] += 1 ;
-				}
-
-				neighboors[counterNeighboors] = currentVertex; 
-				indexInNeighboors[currentVertex] = counterNeighboors;
-				counterDegree = 0 ;  
-				
-
-			}else{
-				neighboors[counterNeighboors] = t; 
-				tabMaxDeg[currentVertex] += 1 ;
-				counterDegree += 1; 
+				adjacencyList[f] = new LinkedList<Integer>();
 			}
-
-			counterNeighboors += 1 ; 
+			adjacencyList[f].add(t);
+			if (adjacencyList[t] == null){
+				adjacencyList[t] = new LinkedList<Integer>();
+			}
+			adjacencyList[t].add(f);
 				
 			/*if(from != -1 || to != -1)
 			{

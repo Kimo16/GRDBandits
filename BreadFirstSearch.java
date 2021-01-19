@@ -54,12 +54,11 @@ public class BreadFirstSearch
 				break; 
 			}
 			
-			int start = graph.indexInNeighboors[currentEdge] + 1;
-			int end   = graph.indexInNeighboors[currentEdge + 1];
+	
 
-			for(int i = start ; i < end ; i ++ )
+			for(int i = 0 ; i <  graph.adjacencyList[currentEdge].size() ; i ++ )
 			{
-				int neighboor = graph.neighboors[i];
+				int neighboor =  graph.adjacencyList[currentEdge].get(i);
 				if(colors[ neighboor ] == WHITE )
 				{
 					colors[ neighboor ]	 	= GRAY;
