@@ -23,8 +23,8 @@ public class Graph
 
 		this.from = new int[estimNbAretes];
 		this.to = new int[estimNbAretes];
-		this.maxEdgeId = 0 ;
-		this.nbVertex = 0; 
+		this.maxEdgeId = 0;
+		this.nbVertex = 0;
 		retrieveVertices(fname,estimNbAretes);
 		
 		mem();
@@ -118,6 +118,7 @@ public class Graph
 	}
 
 	public void buildAdjacencyList(){
+		
 		int currentVertex = -1; 
 		int counterNeighboors = 0; 
 		int maxCounterDegree = 0 ;
@@ -128,8 +129,8 @@ public class Graph
 		for(int i = 0 ; i < from.length ; i ++ )
 		{
 
-			int f = searchEdgeIndex(from[i]);
-			int t = searchEdgeIndex(to[i]);
+			int f = from[i]%this.nbEdges; //searchEdgeIndex(from[i]);
+			int t = to[i]%this.nbEdges; //searchEdgeIndex(to[i]);
 
 			if( currentVertex != f )
 			{
@@ -146,7 +147,7 @@ public class Graph
 
 				neighboors[counterNeighboors] = currentVertex; 
 				indexInNeighboors[currentVertex] = counterNeighboors;
-				counterDegree = 0 ;  
+				counterDegree = 1 ;  
 				
 
 			}else{
@@ -165,7 +166,7 @@ public class Graph
 		}
 
 		//this.maxDegree = maxCounterDegree; 
-
+		
 		for ( int i : tabMaxDeg ){
 			if ( i > this.maxDegree )
 				this.maxDegree = i ;
