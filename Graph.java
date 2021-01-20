@@ -1,219 +1,135 @@
 import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class Graph
 {
 
 
-	int nbEdges; 
-	int nbVertex;
-	int maxDegree; 
-	int maxEdgeId; 
+	public int nbNoeud; 
+	public int nbAretes;
+	public int maxDegree; 
+	public int maxNoeudId; 
 
-	int [] from;
-	int [] to;
-	int [] edges;
-	int [] neighboors;
-	int [] indexInNeighboors;
+	private int[] from,to;
+	private int[][] adjacence;
+	
 
 	public Graph(String fname, int estimNbAretes)
 	{
+		nbNoeud = -1;
+		nbAretes = -1;
+		maxDegree = -1;
+		maxNoeudId = -1;
 
-		this.from = new int[estimNbAretes];
-		this.to = new int[estimNbAretes];
-		this.maxEdgeId = 0;
-		this.nbVertex = 0;
-		retrieveVertices(fname,estimNbAretes);
-		
+		readFile(fname,estimNbAretes);
 		mem();
 
-		this.edges = buildEdgesArray();
-		this.nbEdges = edges.length;
-		//this.adja = new byte[edges.length + 1][edges.length + 1];
-		this.neighboors = new int[nbVertex * 2 + nbEdges + 1 ];
-		this.indexInNeighboors = new int[nbEdges + 1];
+		this.adjacence = new int[maxNoeudId][];
 
-		buildAdjacencyList();
+		buildAdjacence();
 
-		mem();
+
 	}
 
-	private void letcure() {
-		for(int i = 0; i < from.length; i++) {
-			System.out.println(from[i] +" --> " + to[i]);
+	public int distance(int depart, int arrive){
+		//breadFirstAlgorithm
+		return -1;
+	}
+
+	public int[] neighbors(int noeud){
+		return this.adjacence[noeud];
+	}
+
+	private void buildAdjacence(){
+
+		for(int i = 0; i < this.nbAretes; i++){
+			if(this.adjacence[from[i]] == null){
+				this.adjacence[from[i]] = new int[]{to[i]};
+			}else{
+				int[] temp = new int[this.adjacence[from[i]].length + 1];
+				// copy
+				int j;
+				for(j=0; j < this.adjacence[from[i]].length; j++) temp[j] = this.adjacence[from[i]][j];
+				// add last
+				temp[j] = to[i];
+				this.adjacence[from[i]] = temp;
+			}
+			if( this.adjacence[from[i]].length > this.maxDegree){
+				this.maxDegree = this.adjacence[from[i]].length;
+			}
+
+			if(this.adjacence[to[i]] == null){
+				this.adjacence[to[i]] = new int[]{from[i]};
+			}else{
+				int[] temp = new int[this.adjacence[to[i]].length + 1];
+				// copy
+				int j;
+				for(j=0; j < this.adjacence[to[i]].length; j++) temp[j] = this.adjacence[to[i]][j];
+				// add last
+				temp[j] = from[i];
+				this.adjacence[to[i]] = temp;
+			}
+			if( this.adjacence[to[i]].length > this.maxDegree){
+				this.maxDegree = this.adjacence[to[i]].length;
+			}
 		}
 	}
 
-	private void retrieveVertices(String fname, int estimNbAretes) 
+	private void readFile(String fname, int estimNbAretes) 
 	{
+		from = new int[estimNbAretes];
+		to = new int[estimNbAretes];
 		try 
 		{
 			int cpt =0;
 
-			File myObj = new File(fname);
-			Scanner myReader = new Scanner(myObj);
+			//File myObj = new File(fname);
+			//Scanner myReader = new Scanner(myObj);
+			BufferedReader reader = new BufferedReader(new FileReader(fname), 16384);
 			
-			while (myReader.hasNextLine() && cpt < estimNbAretes ) {
-				String[] data = myReader.nextLine().split("\t+", 2);
+			String line;
+			while ((line = reader.readLine()) != null && cpt < estimNbAretes ) {
+				String[] data = line.split("\t+", 2);
 
 				if( data[0].contains("#")) {
 					continue;
 				}
 
-				nbVertex += 1; 
+				this.nbAretes++; 
 
 				from[cpt] = Integer.valueOf(data[0]);
 				to[cpt] = Integer.valueOf(data[1]);
 
-				if(from[cpt] > maxEdgeId )
+				if(from[cpt] > this.maxNoeudId )
 				{
-					maxEdgeId = from[cpt];
+					this.maxNoeudId = from[cpt];
 				}
 
-				if(to[cpt] > maxEdgeId )
+				if(to[cpt] > this.maxNoeudId )
 				{
-					maxEdgeId = to[cpt];
+					this.maxNoeudId = to[cpt];
 				}
 
 				cpt ++;
 			}
 
-			maxEdgeId += 1 ; 
+			this.nbAretes++;
+			this.maxNoeudId++; 
 
-			myReader.close();
+			reader.close();
 
 	    } catch (Exception e) 
 	    {
 	    	System.out.println("Error");
 	    	e.printStackTrace();
 	    }
+		this.nbNoeud = this.maxNoeudId;
 	}
 
 	
-	private int[] buildEdgesArray() {
-		
-		int[] all = new int[from.length + to.length];
-		System.arraycopy(from, 0, all, 0, from.length);
-		System.arraycopy(to, 0, all, from.length, to.length);
-	
-		int [] edgesWithOutDup = Arrays.stream(all).distinct().toArray();
-		
-		return edgesWithOutDup;
-	
-	}
-
-	public int searchEdgeIndex( int edgeID)
-	{
-		for(int i = 0 ; i < edges.length ; i++ )
-		{
-			if( edgeID == edges[i] )
-			{
-				return i;
-			}
-		}
-		return -1;
-
-	}
-
-	public void buildAdjacencyList(){
-		
-		int currentVertex = -1; 
-		int counterNeighboors = 0; 
-		int maxCounterDegree = 0 ;
-		int counterDegree = 0 ; 
-
-		int [] tabMaxDeg = new int [from.length] ;
-
-		for(int i = 0 ; i < from.length ; i ++ )
-		{
-
-			int f = from[i]%this.nbEdges; //searchEdgeIndex(from[i]);
-			int t = to[i]%this.nbEdges; //searchEdgeIndex(to[i]);
-
-			if( currentVertex != f )
-			{
-				currentVertex = f; 
-
-				tabMaxDeg[t] += 1 ;
-
-				if (counterDegree > maxCounterDegree )
-				{
-					maxCounterDegree = counterDegree; 
-					
-					tabMaxDeg[t] += 1 ;
-				}
-
-				neighboors[counterNeighboors] = currentVertex; 
-				indexInNeighboors[currentVertex] = counterNeighboors;
-				counterDegree = 1 ;  
-				
-
-			}else{
-				neighboors[counterNeighboors] = t; 
-				tabMaxDeg[currentVertex] += 1 ;
-				counterDegree += 1; 
-			}
-
-			counterNeighboors += 1 ; 
-				
-			/*if(from != -1 || to != -1)
-			{
-				adja[from][to] = 1; 
-				adja[edge_2][edge_1] = 1;  
-			}*/
-		}
-
-		//this.maxDegree = maxCounterDegree; 
-		
-		for ( int i : tabMaxDeg ){
-			if ( i > this.maxDegree )
-				this.maxDegree = i ;
-		}
-	}
-
-	/*public int getMaxDegree()
-	{
-		int maxDegree = 0 ;
-		
-		for(int edge = 0 ; edge < adja.length ; edge ++ )
-		{
-			int currentDegree = 0; 
-			
-			for(int neighboor = 0 ; neighboor < adja[edge].length ; neighboor ++ )
-			{
-					
-				if ( adja[edge][neighboor] == 1 )
-				{
-					currentDegree += 1; 
-				}
-			}
-			if ( maxDegree < currentDegree )
-			{
-				maxDegree = currentDegree; 
-			}
-		}
-
-		return maxDegree;
-	}*/
-
-	/*public void print_adjacency_list()
-	{
-		for(int i = 0 ; i < adja.length ; i ++)
-		{	
-			System.out.print("La liste d'adjacence pour le sommet n°" + i + ":" );
-
-			for(int j = 0 ; j < adja[i].length; j++)
-			{
-				if ( adja[i][j] == 1)
-				{
-					System.out.print(" "+ j+ " ");
-				}
-			}
-			System.out.println();
-		}
-	}*/
 
 	public static void mem() {
 		Runtime rt = Runtime.getRuntime();
