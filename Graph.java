@@ -11,6 +11,7 @@ public class Graph
 	int nbVertex;
 	int maxDegree; 
 	int maxEdgeId; 
+	int dist ;
 
 	int [] from;
 	int [] to;
@@ -19,21 +20,29 @@ public class Graph
 
 	int voisins[];
 	int indices[];
+	
+	int sommetdepart ;
+	int sommetarrive ;
+	
+	
 
 	HashMap<Integer, ArrayList<Integer>> adjacences;
 
-	public Graph(String fname, int estimNbAretes)
+	public Graph(String fname, int estimNbAretes, int start , int end )
 	{
 
 		this.from = new int[estimNbAretes];
 		this.to = new int[estimNbAretes];
 		this.nbVertex = 0; 
+		this.sommetdepart = start ;
+		this.sommetarrive = end ;
 		retrieveVertices(fname,estimNbAretes);
 		
-		mem();
-
 		this.edges = buildEdgesArray();
+		//mem() ;
 		this.maxEdgeId = -1;
+		
+		mem() ;
 		//this.indices = new int[this.edges.length];
 		//this.voisins = new int[this.indices.length + this.nbVertex];
 		this.adjacences = new HashMap<Integer, ArrayList<Integer>>();
@@ -41,9 +50,11 @@ public class Graph
 		this.maxDegree = getMaxVoisinsQ();
 		
 
-		mem();
+		//mem();
 		
 		//this.maxDegree = getMaxDegree();
+		//System.out.println("Avant BFS.");
+		this.dist = BFS(this.adjacences,this.sommetdepart,this.sommetarrive);
 	}
 	
 	/* remplis les tableaux de voisinnage et des indices */
@@ -84,6 +95,28 @@ public class Graph
 			//}
 		}
 	}
+	
+	public static int BFS(HashMap<Integer, ArrayList<Integer>> adjLst, int start , int arrive) {
+	    Queue<Integer> queue = new ArrayDeque<>();
+	    HashSet<Integer> seen = new HashSet<>();
+	    queue.add(start);
+	    int count = 0 ;
+	    while(0 != queue.size()){
+	    	Integer vertex = queue.poll();
+	        if(!seen.contains(vertex)){
+	            //System.out.print(vertex + " ");
+	            queue.addAll(adjLst.get(vertex)); // Add all neighbors of 'vertex' to the queue
+	            seen.add(vertex);
+	        }
+	        if ( seen.contains(arrive))
+	        	return count ;
+	        
+	    }
+	    
+	    System.out.println("\nBFS terminé .");
+	    return Integer.MAX_VALUE ;
+	}
+	
 
 	/* renvoie le plus grand nombre de voisin qu'un noeud peut avoir dans le graphe*/
 	/*private int getMaxVoisins(){
