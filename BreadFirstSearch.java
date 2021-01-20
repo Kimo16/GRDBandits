@@ -15,8 +15,8 @@ public class BreadFirstSearch
 	public BreadFirstSearch(Graph graph)
 	{
 		this.graph 		= graph; 
-		this.colors 	= new byte[graph.edges.length + 1];
-		this.distances 	= new int[graph.edges.length  + 1];
+		this.colors 	= new byte[graph.maxNoeudId + 1];
+		this.distances 	= new int[graph.maxNoeudId  + 1];
 		this.fifo 		= new ArrayDeque<Integer>();
 	}
 
@@ -24,12 +24,8 @@ public class BreadFirstSearch
 
 	public int breadFirstAlgorithm( int originEdge , int endEgde )
 	{
-		if ( graph.searchEdgeIndex(endEgde) == -1 )
-		{
-			return Integer.MAX_VALUE;
-		}
+		
 	
-		originEdge = graph.searchEdgeIndex(originEdge);
 		colors[originEdge] = GRAY;
 	
 		/*initialise data for every edges except the origin*/
@@ -49,29 +45,26 @@ public class BreadFirstSearch
 		while( ! fifo.isEmpty() )
 		{
 			int currentEdge = fifo.pollFirst();
-			if( graph.edges[currentEdge] == endEgde ) 
+			if( currentEdge == endEgde ) 
 			{
 				break; 
 			}
 			
-			int start = graph.indexInNeighboors[currentEdge] + 1;
-			int end   = graph.indexInNeighboors[currentEdge + 1];
-
-			for(int i = start ; i < end ; i ++ )
+			for(int i = 0 ; i < graph.adjacence[currentEdge].length ; i ++ )
 			{
-				int neighboor = graph.neighboors[i];
-				if(colors[ neighboor ] == WHITE )
+				int neighboorId = graph.adjacence[currentEdge][i];
+				if(colors[ neighboorId ] == WHITE )
 				{
-					colors[ neighboor ]	 	= GRAY;
-					distances [ neighboor ] = distances[ currentEdge ] + 1;
-					fifo.add( neighboor ); 
+					colors[ neighboorId ]	 	= GRAY;
+					distances [ neighboorId ] 	= distances[ currentEdge ] + 1;
+					fifo.add( neighboorId ); 
 				}
 			}
 
 			colors[ currentEdge ] = BLACK;
 		}
 
-		return distances[graph.searchEdgeIndex(endEgde)]; /* à changer*/
+		return distances[endEgde]; /* à changer*/
 	}
 
 }
