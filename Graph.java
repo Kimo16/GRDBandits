@@ -16,6 +16,7 @@ public class Graph
 	private int[] from,to;
 	public int[][] adjacence;
 	
+	private static final int BUFFER_SIZE = 16384;
 
 	public Graph(String fname, int estimNbAretes)
 	{
@@ -25,13 +26,16 @@ public class Graph
 		maxNoeudId = -1;
 
 		readFile(fname,estimNbAretes);
+		
 		mem();
 
 		this.adjacence = new int[maxNoeudId][];
 		System.out.println("n="+this.maxNoeudId);
 		System.out.println("m="+this.nbAretes);
 		buildAdjacence();
+
 		mem();
+		
 		System.out.println("degmax=" + this.maxDegree);
 
 	}
@@ -90,7 +94,7 @@ public class Graph
 
 			//File myObj = new File(fname);
 			//Scanner myReader = new Scanner(myObj);
-			BufferedReader reader = new BufferedReader(new FileReader(fname), 16384);
+			BufferedReader reader = new BufferedReader(new FileReader(fname), BUFFER_SIZE);
 			
 			String line;
 			while ((line = reader.readLine()) != null && cpt < estimNbAretes ) {
