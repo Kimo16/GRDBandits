@@ -14,7 +14,7 @@ public class Graph
 	public int maxNoeudId; 
 
 	private int[] from,to;
-	private int[][] adjacence;
+	public int[][] adjacence;
 	
 
 	public Graph(String fname, int estimNbAretes)
@@ -28,9 +28,11 @@ public class Graph
 		mem();
 
 		this.adjacence = new int[maxNoeudId][];
-
+		System.out.println("n="+this.maxNoeudId);
+		System.out.println("m="+this.nbAretes);
 		buildAdjacence();
-
+		mem();
+		System.out.println("degmax=" + this.maxDegree);
 
 	}
 

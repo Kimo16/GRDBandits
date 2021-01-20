@@ -13,18 +13,11 @@ public class TP1
 		int sommetArrive = Integer.parseInt(args[3]);
 		
 		Graph g = new Graph(fname, estimNbArretes);
-		System.out.println("n="+g.maxNoeudId);
-		System.out.println("m="+g.nbAretes);
-		System.out.println("degmax=" + g.maxDegree);
-		System.out.println("dist=" +g.distance(sommetStart,sommetArrive));
-		mem();
+		BreadFirstSearch bfs = new BreadFirstSearch(g);
+		int distance = bfs.breadFirstAlgorithm(sommetStart,sommetArrive);
+		System.out.println("dist=" +distance);
+		
 
 	}
 
-    public static void mem() {
-		Runtime rt = Runtime.getRuntime();
-		rt.gc();
-		System.err.println("Allocated memory : "+ (rt.totalMemory() - rt.freeMemory()) / 1000000 + " Mb");
-		System.err.flush();
-	}
 }
