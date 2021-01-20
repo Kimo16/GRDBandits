@@ -4,20 +4,22 @@ import java.io.InputStreamReader;
 public class Main
 {
 
-
 	public static void main(String[] args)
 	{
-
 		/*recupérer les informations*/
 		/*construire le graphe*/
 		/*effectuer les calculs demander*/
 
-		String fname = "as20000102.txt";
+		String fname = "Archives/as20000102.txt";
 		int nb = getLineNumber(fname);
-		Graph g = new Graph(fname, nb);
+		Graph g = new Graph(fname, 14000);
+		BreadFirstTraversal bfs = new BreadFirstTraversal(g);
+		System.out.println("n="+g.maxEdgeId);
+		System.out.println("m="+g.nbVertex);
+		System.out.println("degmax=" + g.maxDegree);
+		System.out.println("dist=" + bfs.breadthFirstTraversal(1,1000));
 	}
-
-	/* INUTILE pour le rendu vu que l'on a le nombre de ligne en parametre normalement*/
+/* INUTILE pour le rendu vu que l'on a le nombre de ligne en parametre normalement*/
 	private static int getLineNumber(String fname) {
 		System.out.println("in function");
 		Process p;
@@ -38,5 +40,12 @@ public class Main
 		}
 		System.out.println("end function");
 		return res;
+	}
+
+	public static void mem() {
+		Runtime rt = Runtime.getRuntime();
+		rt.gc();
+		System.err.println("Allocated memory : "+ (rt.totalMemory() - rt.freeMemory()) / 1000000 + " Mb");
+		System.err.flush();
 	}
 }
