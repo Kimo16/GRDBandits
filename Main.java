@@ -13,11 +13,11 @@ public class Main
 		String fname = "Archives/as20000102.txt";
 		int nb = getLineNumber(fname);
 		Graph g = new Graph(fname, 14000);
-		BreadFirstTraversal bfs = new BreadFirstTraversal(g);
+		//BreadFirstTraversal bfs = new BreadFirstTraversal(g);
 		System.out.println("n="+g.maxEdgeId);
 		System.out.println("m="+g.nbVertex);
 		System.out.println("degmax=" + g.maxDegree);
-		System.out.println("dist=" + bfs.breadthFirstTraversal(1,1000));
+		//System.out.println("dist=" + bfs.breadthFirstTraversal(1,1000));
 	}
 /* INUTILE pour le rendu vu que l'on a le nombre de ligne en parametre normalement*/
 	private static int getLineNumber(String fname) {
