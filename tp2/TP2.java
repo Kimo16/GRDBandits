@@ -48,6 +48,31 @@ class TP2 {
         System.out.println("diam >= " + dist );
     }
 
+    private static void fourSweep(int departure, Graph g){
+        Traversal trav = new Traversal(g.n);
+        trav.bfs(g,departure);
+        int v = trav.getFarthest();
+
+        trav = new Traversal(g.n);
+        trav.bfs(g,v);
+        int w = trav.getFarthest();
+        int dist = trav.distance(w);
+
+        int m = trav.searchMiddleDist(w,dist);
+
+        trav = new Traversal(g.n);
+        trav.bfs(g,m);
+        v = trav.getFarthest();
+
+        trav = new Traversal(g.n);
+        trav.bfs(g,v);
+        w = trav.getFarthest();
+        dist = trav.distance(w);
+
+        System.out.println("diam >= " + dist );
+
+    }
+
     public static void main(String[] args) throws IOException {
         
         //mem();
@@ -113,6 +138,10 @@ class TP2 {
                 dBFS(src,g);
                 break;
 
+            case four_sweep : 
+                fourSweep(src,g);
+                break;
+                
             default :
                 System.out.println(" Not yet implemented ! ");
         }

@@ -18,6 +18,7 @@ import java.io.FileReader;
 class Traversal {
     ArrayDeque<Integer> queue;
     int[] dist;
+    int[] roots;
     int max = 0;
     int farthest;
     public static final int infinity = Integer.MAX_VALUE; 
@@ -25,6 +26,7 @@ class Traversal {
     Traversal(int n) {
         queue = new ArrayDeque<>();
         dist = new int [n];
+        roots = new int[n];
     }
 
     void clear() {
@@ -56,6 +58,7 @@ class Traversal {
             for (int v : g.neighbors(u)) {
                 if (dist[v] == infinity) { // first discovery of v
                     dist[v] = d + 1;
+                    roots[v] = u ;
                     if( (d + 1) > max){
                         max = d +1;
                         this.farthest = v;
@@ -66,5 +69,19 @@ class Traversal {
         }
 
         return n;
+    }
+
+    int searchMiddleDist(int v, int distance){
+        int incr = distance;
+        int current_node = v ;  
+        int father = -1 ; 
+        while (incr > distance / 2 )
+        {   
+            father = roots[current_node];
+            current_node = father;
+            incr = incr - 1 ;
+        }
+
+        return current_node;
     }
 }
