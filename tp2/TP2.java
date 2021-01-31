@@ -20,6 +20,7 @@ class TP2 {
     private final static String four_sweep = "4-sweep";
     private final static String sum_sweep = "sum-sweep";
     private final static String diametre = "diametre";
+    private final static String search_node = "search-node";
 
     public static void mem() {
         Runtime rt = Runtime.getRuntime();
@@ -35,10 +36,10 @@ class TP2 {
     private static void dBFS(int departure,Graph g){
         Traversal trav = new Traversal(g.n);
 
-        trav.bfs(g, departure);
+        trav.bfs(g, departure,0);
         int v = trav.getFarthest();
 
-        trav.bfs(g, v);
+        trav.bfs(g,v,0);
         int w = trav.getFarthest();
         int dist = trav.distance(w);
 
@@ -50,22 +51,19 @@ class TP2 {
 
     private static void fourSweep(int departure, Graph g){
         Traversal trav = new Traversal(g.n);
-        trav.bfs(g,departure);
+        trav.bfs(g,departure,0);
         int v = trav.getFarthest();
 
-        trav = new Traversal(g.n);
-        trav.bfs(g,v);
+        trav.bfs(g,v,0);
         int w = trav.getFarthest();
         int dist = trav.distance(w);
 
         int m = trav.searchMiddleDist(w,dist);
 
-        trav = new Traversal(g.n);
-        trav.bfs(g,m);
+        trav.bfs(g,m,0);
         v = trav.getFarthest();
 
-        trav = new Traversal(g.n);
-        trav.bfs(g,v);
+        trav.bfs(g,v,0);
         w = trav.getFarthest();
         dist = trav.distance(w);
 
@@ -133,8 +131,11 @@ class TP2 {
         //Traversal trav = new Traversal(g.n);
 
         switch( args[0] ){
+            case search_node :
+                System.out.println("nodeId max component: "+ new Traversal(g.n).searchNodeInLargestComponent(g));
+                break;
+
             case two_sweep :
-               
                 dBFS(src,g);
                 break;
 
