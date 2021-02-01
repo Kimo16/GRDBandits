@@ -78,8 +78,7 @@ class TP2 {
         int[] b = new int[g.n];
 
         // init de eccsup et b
-        for (int i = 0; i < eccsup.length; i++) {eccsup[i]=Integer.MAX_VALUE;}
-        for (int i = 0; i < b.length; i++) {b[i]=Integer.MAX_VALUE;}
+        for (int i = 0; i < eccsup.length; i++) {eccsup[i]=Integer.MAX_VALUE;b[i]=Integer.MAX_VALUE;}
 
         int diamlow = Integer.MIN_VALUE;
         int a = sommetDepart;
@@ -187,6 +186,9 @@ class TP2 {
 
             case four_sweep : 
                 fourSweep(src,g);
+                break;
+            case diametre:
+                exact(src, g);  
                 break;
                 
             default :
