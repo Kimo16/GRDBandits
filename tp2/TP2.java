@@ -70,7 +70,53 @@ class TP2 {
         System.out.println("diam >= " + dist );
 
     }
+    private static void exact(int sommetDepart,Graph g){
+        Traversal trav = new Traversal(g.n);
 
+        boolean[] Cu = trav.get_connex(g, sommetDepart);
+        int[] eccsup = new int[g.n];
+        int[] b = new int[g.n];
+
+        // init de eccsup et b
+        for (int i = 0; i < eccsup.length; i++) {eccsup[i]=Integer.MAX_VALUE;}
+        for (int i = 0; i < b.length; i++) {b[i]=Integer.MAX_VALUE;}
+
+        int diamlow = Integer.MIN_VALUE;
+        int a = sommetDepart;
+        while(true){
+            if(eccsup[a] <= diamlow){
+                System.out.println("diam="+diamlow);
+                System.exit(0);
+            }else{
+                Traversal trav_a = new Traversal(g.n);
+                trav_a.bfs(g, a, 0);
+                int ecc_a = trav_a.getMax();
+                if(ecc_a > diamlow){
+                    diamlow = ecc_a;
+                }
+                for (int i = 0; i < b.length; i++) {
+                    b[i] = trav_a.distance(i) + ecc_a;
+                    if(b[i] < eccsup[i]){
+                        eccsup[i] = b[i];
+                    }
+                }
+                a = max_index(Cu, eccsup);
+            }
+        }
+    }
+    public static int max_index(boolean[] cu, int[] tab){
+        int max = Integer.MIN_VALUE, max_i = Integer.MIN_VALUE;
+        
+        for (int i = 0; i < tab.length; i++) {
+            if(cu[i]){
+                if(max < tab[i]){
+                    max = tab[i];
+                    max_i = i;
+                }
+            }
+        }
+        return max_i;
+    }
     public static void main(String[] args) throws IOException {
         
         //mem();
