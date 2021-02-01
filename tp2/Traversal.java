@@ -152,4 +152,19 @@ class Traversal {
         }
         return -1;
     }
+    boolean[] get_connex(Graph g, int sommet){
+
+        boolean[] cnx = new boolean[g.n];
+
+        this.bfs(g, sommet, 0);
+
+        for (int i = 0; i < cnx.length; i++) {
+            if(this.dist[i] != infinity){
+                cnx[i] = true;
+            }else{
+                cnx[i] = false;
+            }
+        }
+        return cnx;
+    }
 }
