@@ -152,17 +152,17 @@ class Traversal {
         }
         return -1;
     }
-    boolean[] get_connex(Graph g, int sommet){
+    int[] get_connex(Graph g, int sommet){
 
-        boolean[] cnx = new boolean[g.n];
+        int n = this.bfs(g, sommet, 0);
 
-        this.bfs(g, sommet, 0);
-
-        for (int i = 0; i < cnx.length; i++) {
+        int[] cnx = new int[n];
+        int j=0;
+        for (int i = 0; i < g.n; i++) {
             if(this.dist[i] != infinity){
-                cnx[i] = true;
-            }else{
-                cnx[i] = false;
+                cnx[j] = i;
+                j++;
+                
             }
         }
         return cnx;

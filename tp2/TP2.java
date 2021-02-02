@@ -73,48 +73,49 @@ class TP2 {
     private static void exact(int sommetDepart,Graph g){
         Traversal trav = new Traversal(g.n);
 
-        boolean[] Cu = trav.get_connex(g, sommetDepart);
-        int[] eccsup = new int[g.n];
-        int[] b = new int[g.n];
+        int[] Cu = trav.get_connex(g, sommetDepart);
+        int[] eccsup = new int[Cu.length];
+        int[] b = new int[Cu.length];
 
+        int indexof_sommetDepart= -1;
         // init de eccsup et b
-        for (int i = 0; i < eccsup.length; i++) {eccsup[i]=Integer.MAX_VALUE;b[i]=Integer.MAX_VALUE;}
+        for (int i = 0; i < eccsup.length; i++) {
+            eccsup[i]=Integer.MAX_VALUE;
+            b[i]=Integer.MAX_VALUE; 
+            if(Cu[i] == sommetDepart) {
+                indexof_sommetDepart = i;
+            }
+        }
 
-        int diamlow = Integer.MIN_VALUE;
-        int a = sommetDepart;
-        while(true){
-            if(eccsup[a] <= diamlow){
-                System.out.println("diam="+diamlow);
-                System.exit(0);
-            }else{
-                Traversal trav_a = new Traversal(g.n);
-                trav_a.bfs(g, a, 0);
-                int ecc_a = trav_a.getMax();
-                if(ecc_a > diamlow){
-                    diamlow = ecc_a;
-                }
-                for (int i = 0; i < b.length; i++) {
-                    b[i] = trav_a.distance(i) + ecc_a;
-                    if(b[i] < eccsup[i]){
-                        eccsup[i] = b[i];
-                    }
-                }
-                a = max_index(Cu, eccsup);
+        int diamlow = 0;
+
+        int a = indexof_sommetDepart;
+        while(eccsup[a] > diamlow){
+            
+            trav.bfs(g, Cu[a], 0);
+
+            int ecc_a = trav.getMax();
+            //System.out.println("a=["+a+"]"+Cu[a]+" diamlow="+diamlow+" eccsup[a]="+eccsup[a]+" ecc[a]="+ecc_a);
+            if(ecc_a > diamlow){
+                diamlow = ecc_a;
             }
-        }
-    }
-    public static int max_index(boolean[] cu, int[] tab){
-        int max = Integer.MIN_VALUE, max_i = Integer.MIN_VALUE;
-        
-        for (int i = 0; i < tab.length; i++) {
-            if(cu[i]){
-                if(max < tab[i]){
-                    max = tab[i];
+            int max = Integer.MIN_VALUE, max_i = 0;
+            for (int i = 0; i < b.length; i++) {
+                b[i] = trav.distance(Cu[i]) + ecc_a;
+                if(b[i] < eccsup[i]){
+                    eccsup[i] = b[i];
+                }
+                if(max < eccsup[i]){
+                    max = eccsup[i];
                     max_i = i;
+                }else if(max == eccsup[i] && Math.random() > 0.5){
+                    max_i =i;
                 }
             }
+            a = max_i;
         }
-        return max_i;
+       // System.out.println("a=["+a+"]"+Cu[a]+" diamlow="+diamlow+" eccsup[a]="+eccsup[a]);
+        System.out.println("diam="+diamlow);
     }
     public static void main(String[] args) throws IOException {
         
