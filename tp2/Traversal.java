@@ -154,12 +154,12 @@ class Traversal {
     }
     int[] get_connex(Graph g, int sommet){
 
-        int n = this.bfs(g, sommet, 0);
+        int n = this.bfs(g, sommet, 1);
 
         int[] cnx = new int[n];
         int j=0;
-        for (int i = 0; i < g.n; i++) {
-            if(this.dist[i] != infinity){
+        for (int i = 0; i < this.connect_component.length; i++) {
+            if(connect_component[i] == 1){
                 cnx[j] = i;
                 j++;
                 

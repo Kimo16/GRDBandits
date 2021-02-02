@@ -88,33 +88,42 @@ class TP2 {
         }
 
         int diamlow = 0;
-
+        
         int a = indexof_sommetDepart;
-        while(eccsup[a] > diamlow){
+        int diff= -1, diff_temp = 0;
+        while(eccsup[a] > diamlow & (diff > 3 | diff_temp < 10) ){
             
             trav.bfs(g, Cu[a], 0);
 
             int ecc_a = trav.getMax();
-            //System.out.println("a=["+a+"]"+Cu[a]+" diamlow="+diamlow+" eccsup[a]="+eccsup[a]+" ecc[a]="+ecc_a);
             if(ecc_a > diamlow){
                 diamlow = ecc_a;
             }
             int max = Integer.MIN_VALUE, max_i = 0;
             for (int i = 0; i < b.length; i++) {
+
                 b[i] = trav.distance(Cu[i]) + ecc_a;
+                
                 if(b[i] < eccsup[i]){
                     eccsup[i] = b[i];
                 }
+                
                 if(max < eccsup[i]){
                     max = eccsup[i];
                     max_i = i;
-                }else if(max == eccsup[i] && Math.random() > 0.5){
-                    max_i =i;
                 }
             }
             a = max_i;
+
+            if(diff == eccsup[a] - diamlow){
+                diff_temp++;
+            }else{
+                diff = eccsup[a] - diamlow;
+                diff_temp = 0;
+            }
+            
+
         }
-       // System.out.println("a=["+a+"]"+Cu[a]+" diamlow="+diamlow+" eccsup[a]="+eccsup[a]);
         System.out.println("diam="+diamlow);
     }
     public static void main(String[] args) throws IOException {
@@ -137,6 +146,8 @@ class TP2 {
 
         // Read edges of a graph.
         String fname = args[1];
+
+        System.out.println(fname);
         //System.out.println("0 : " + args[0] + "1 : "+ args[1] + " 2 : "+ args[2]);
         int m_max = Integer.parseInt(args[2]);
         Edges edg = new Edges();
