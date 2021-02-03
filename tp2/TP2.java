@@ -70,6 +70,49 @@ class TP2 {
         System.out.println("diam >= " + dist );
 
     }
+
+    private static void sumSweep(int departure , Graph g ) {
+
+        int maxDist = -1 ;
+        Traversal trav = new Traversal(g.n);
+
+        trav.bfs(g, departure,0);
+        int u = trav.getFarthest();
+        int dist_uv = trav.distance(u);
+
+        if ( maxDist < dist_uv){
+            maxDist = dist_uv ;
+        }
+
+        trav.bfs(g,u,0);
+        int v = trav.getFarthest();
+        int dist_vw = trav.distance(v);
+
+        if ( maxDist < dist_vw){
+            maxDist = dist_vw ;
+        }
+
+        trav.bfs(g,v,0);
+        int w = trav.getFarthest();
+        int dist_wz = trav.distance(w);
+
+        if ( maxDist < dist_wz){
+            maxDist = dist_wz ;
+        }
+
+        trav.bfs(g,w,0);
+        int z = trav.getFarthest();
+        int dist_za = trav.distance(z);
+
+        if ( maxDist < dist_za){
+            maxDist = dist_za ;
+        }
+
+        System.out.println("diam >= " + maxDist );
+
+
+    }
+
     private static void exact(int sommetDepart,Graph g){
         Traversal trav = new Traversal(g.n);
 
@@ -126,6 +169,7 @@ class TP2 {
         }
         System.out.println("diam="+diamlow);
     }
+
     public static void main(String[] args) throws IOException {
         
         //mem();
@@ -147,7 +191,7 @@ class TP2 {
         // Read edges of a graph.
         String fname = args[1];
 
-        System.out.println(fname);
+        //System.out.println(fname);
         //System.out.println("0 : " + args[0] + "1 : "+ args[1] + " 2 : "+ args[2]);
         int m_max = Integer.parseInt(args[2]);
         Edges edg = new Edges();
@@ -158,8 +202,13 @@ class TP2 {
 
         // Construct adjacency lists.
         Graph g = new Graph(edg, true);
-        System.out.println("n=" + g.n);
-        System.out.println("m=" + g.m); 
+
+
+        /**
+        En commentaire car non demandé dans l'affichage final.
+        **/
+        //System.out.println("n=" + g.n);
+        //System.out.println("m=" + g.m); 
         
         //mem();
 
@@ -199,9 +248,15 @@ class TP2 {
             case four_sweep : 
                 fourSweep(src,g);
                 break;
+
+            case sum_sweep :
+                sumSweep(src,g);
+                break ;
+
             case diametre:
                 exact(src, g);  
                 break;
+
                 
             default :
                 System.out.println(" Not yet implemented ! ");
