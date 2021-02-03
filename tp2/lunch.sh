@@ -2,7 +2,7 @@ echo "#graph\texact"
 
 java TP2 diametre g.txt 6 1
 java TP2 diametre ../Archives/as20000102.txt 14000 1
-#java TP2 diametre ../Archives/as-caida20071105.txt 110000	0
+java TP2 diametre ../Archives/as-caida20071105.txt 110000	8563
 java TP2 diametre ../Archives/as-skitter.txt	12000000 	0
 java TP2 diametre ../Archives/roadNet-TX.txt	1922000		0
 java TP2 diametre ../Archives/roadNet-CA.txt	2800000		0
