@@ -48,7 +48,9 @@ class Edges {
             } 
             String su = line.substring(0, sep);
             String sv = line.substring(sep+1);
-            sv = sv.split("\t",2)[0];
+            if( sv.contains("\t")){
+                sv = sv.split("\t",2)[0];
+            }
             int u = Integer.parseInt(su);
             int v = Integer.parseInt(sv);
             // add edge u v:
