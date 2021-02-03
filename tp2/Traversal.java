@@ -130,7 +130,7 @@ class Traversal {
             component_size[connect_component[i]] += 1;
         }
 
-        System.out.println();
+        // System.out.println();
         int max_size = 0; 
         int max_component_id = 0; 
         

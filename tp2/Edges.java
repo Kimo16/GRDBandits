@@ -33,9 +33,10 @@ class Edges {
             String line = inp.readLine();
             if (line == null) break;
             if (line.charAt(0) == '#') { // a comment ?, show it
-                System.err.println(line);
+                //System.err.println(line);
                 continue;
             }
+            
             // two ints separated by '\t' or ' ':
             int sep = line.indexOf('\t');
             if (sep < 0){

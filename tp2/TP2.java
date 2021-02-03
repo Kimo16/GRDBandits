@@ -34,6 +34,7 @@ class TP2 {
 
     /* Double Bread First Search implementation */
     private static void dBFS(int departure,Graph g){
+
         Traversal trav = new Traversal(g.n);
 
         trav.bfs(g, departure,0);
@@ -50,6 +51,7 @@ class TP2 {
     }
 
     private static void fourSweep(int departure, Graph g){
+
         Traversal trav = new Traversal(g.n);
         trav.bfs(g,departure,0);
         int v = trav.getFarthest();
@@ -114,7 +116,12 @@ class TP2 {
     }
 
     private static void exact(int sommetDepart,Graph g){
+
         Traversal trav = new Traversal(g.n);
+        
+        if ( sommetDepart == -1 ){
+            sommetDepart = trav.searchNodeInLargestComponent(g) ;
+        }
 
         int[] Cu = trav.get_connex(g, sommetDepart);
         int[] eccsup = new int[Cu.length];
