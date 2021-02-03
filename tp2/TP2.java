@@ -133,8 +133,7 @@ class TP2 {
         int diamlow = 0;
         
         int a = indexof_sommetDepart;
-        int diff= -1, diff_temp = 0;
-        while(eccsup[a] > diamlow & (diff > 3 | diff_temp < 10) ){
+        while(eccsup[a] > diamlow ){
             
             trav.bfs(g, Cu[a], 0);
 
@@ -158,13 +157,7 @@ class TP2 {
             }
             a = max_i;
 
-            if(diff == eccsup[a] - diamlow){
-                diff_temp++;
-            }else{
-                diff = eccsup[a] - diamlow;
-                diff_temp = 0;
-            }
-            
+         
 
         }
         System.out.println("diam="+diamlow);
