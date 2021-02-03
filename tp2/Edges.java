@@ -38,16 +38,28 @@ class Edges {
             }
             // two ints separated by '\t' or ' ':
             int sep = line.indexOf('\t');
-            if (sep < 0) sep = line.indexOf(' ');
-            if (sep < 0) throw new Error("bad edge format");
+            if (sep < 0){
+                sep = line.indexOf(' ');
+            }
+
+            if (sep < 0){
+                throw new Error("bad edge format");  
+            } 
             String su = line.substring(0, sep);
             String sv = line.substring(sep+1);
+            sv = sv.split("\t",2)[0];
             int u = Integer.parseInt(su);
             int v = Integer.parseInt(sv);
             // add edge u v:
-            if (m >= tail.length) { increaseCapacity(); }
-            if (u >= n) { n = u+1; }
-            if (v >= n) { n = v+1; }
+            if (m >= tail.length){ 
+                increaseCapacity(); 
+            }
+            if (u >= n) { 
+                n = u+1; 
+            }
+            if (v >= n) {
+                n = v+1; 
+            }
             tail[m] = u;
             head[m] = v;
             ++m;

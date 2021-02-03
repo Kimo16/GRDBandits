@@ -1,7 +1,7 @@
 #graphe	2-sweep 4-sweep	sum-sweep	exact
 g.txt	4	4	4	4
 as20000102.txt.gz	9	9	9	9		# java TP2 4-sweep as20000102.txt 13233 1
-as-caida20071105.txt.gz
+as-caida20071105.txt.gz	17	17	17	17	# java TP2 2-sweep as-caida20071105 106762 8563
 as-skitter.txt.gz	30	30	31	31		# java TP2 2-sweep as-skitter.txt 11095298 0
 roadNet-TX.txt.gz	1064	997	1064	612		# java TP2 sum-sweep roadNet-TX.txt 3843320 0
 roadNet-CA.txt.gz	857	799	857	476 	# java TP2 diametre roadNet-CA.txt 5533214 0
