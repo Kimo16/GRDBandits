@@ -113,6 +113,63 @@ class TP2 {
 
     }
 
+    private static void exact(int sommetDepart,Graph g){
+        Traversal trav = new Traversal(g.n);
+
+        int[] Cu = trav.get_connex(g, sommetDepart);
+        int[] eccsup = new int[Cu.length];
+        int[] b = new int[Cu.length];
+
+        int indexof_sommetDepart= -1;
+        // init de eccsup et b
+        for (int i = 0; i < eccsup.length; i++) {
+            eccsup[i]=Integer.MAX_VALUE;
+            b[i]=Integer.MAX_VALUE; 
+            if(Cu[i] == sommetDepart) {
+                indexof_sommetDepart = i;
+            }
+        }
+
+        int diamlow = 0;
+        
+        int a = indexof_sommetDepart;
+        int diff= -1, diff_temp = 0;
+        while(eccsup[a] > diamlow & (diff > 3 | diff_temp < 10) ){
+            
+            trav.bfs(g, Cu[a], 0);
+
+            int ecc_a = trav.getMax();
+            if(ecc_a > diamlow){
+                diamlow = ecc_a;
+            }
+            int max = Integer.MIN_VALUE, max_i = 0;
+            for (int i = 0; i < b.length; i++) {
+
+                b[i] = trav.distance(Cu[i]) + ecc_a;
+                
+                if(b[i] < eccsup[i]){
+                    eccsup[i] = b[i];
+                }
+                
+                if(max < eccsup[i]){
+                    max = eccsup[i];
+                    max_i = i;
+                }
+            }
+            a = max_i;
+
+            if(diff == eccsup[a] - diamlow){
+                diff_temp++;
+            }else{
+                diff = eccsup[a] - diamlow;
+                diff_temp = 0;
+            }
+            
+
+        }
+        System.out.println("diam="+diamlow);
+    }
+
     public static void main(String[] args) throws IOException {
         
         //mem();
@@ -133,6 +190,8 @@ class TP2 {
 
         // Read edges of a graph.
         String fname = args[1];
+
+        //System.out.println(fname);
         //System.out.println("0 : " + args[0] + "1 : "+ args[1] + " 2 : "+ args[2]);
         int m_max = Integer.parseInt(args[2]);
         Edges edg = new Edges();
@@ -189,9 +248,15 @@ class TP2 {
             case four_sweep : 
                 fourSweep(src,g);
                 break;
+
             case sum_sweep :
                 sumSweep(src,g);
                 break ;
+
+            case diametre:
+                exact(src, g);  
+                break;
+
                 
             default :
                 System.out.println(" Not yet implemented ! ");
