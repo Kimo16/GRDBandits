@@ -7,12 +7,11 @@ public class Triangles {
 
 	public Triangles(Graph g){
 		this.g = g;
-		
+		voisins_u = new boolean[g.n];
 	}
 
 	public int triangle(int u){
 
-		voisins_u = new boolean[g.n];
 		for (Integer v : g.neighbors(u)) {
 			voisins_u[v] = true;
 		}
@@ -23,6 +22,9 @@ public class Triangles {
 					nb_triangles++;
 				}
 			}
+		}
+		for (Integer v : g.neighbors(u)) {
+			voisins_u[v] = false;
 		}
 		return nb_triangles / 2;
 	}
