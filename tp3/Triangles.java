@@ -7,15 +7,17 @@ public class Triangles {
 
 	public Triangles(Graph g){
 		this.g = g;
+		voisins_u = new boolean[g.n];
 		
 	}
 
 	public int triangle(int u){
 
-		voisins_u = new boolean[g.n];
+		
 		for (Integer v : g.neighbors(u)) {
 			voisins_u[v] = true;
 		}
+
 		nb_triangles = 0;
 		for (Integer v : g.neighbors(u)) {
 			for (Integer v2 : g.neighbors(v)) {
@@ -24,6 +26,41 @@ public class Triangles {
 				}
 			}
 		}
+
+		for (Integer v : g.neighbors(u)) {
+			voisins_u[v] = false;
+		}
+
 		return nb_triangles / 2;
+	}
+
+	public void cluster(){
+
+		int num_sommet = -1 ;
+		float sumClust = 0 ; 
+		int sum_tri = 0 ;
+		int nb_tri_x = 0 ;
+		float calc = 0 ;
+
+		for ( int i = 0 ; i < this.g.n ; i++){
+			if ( this.g.deg[i] >= 2 ){
+				nb_tri_x = this.triangle(i) ;
+				
+				sum_tri += nb_tri_x ;
+				calc = ( 2 * nb_tri_x ) ;
+
+				calc /= ( this.g.deg[i] ) * ( this.g.deg[i] - 1 ) ; // local
+
+				sumClust += calc ;
+
+
+			}
+
+		}
+
+		float calcglobal = 3 * nb_tri_x ;
+				
+		System.out.printf("%.5f\n", (float)(sumClust / this.g.n ) ) ;
+		System.out.printf("%.5f\n", (float)((calcglobal)) ) ;
 	}
 }
