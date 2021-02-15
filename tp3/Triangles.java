@@ -40,27 +40,43 @@ public class Triangles {
 		int sum_tri = 0 ;
 		int nb_tri_x = 0 ;
 		float calc = 0 ;
+		int count = 0 ;
 
 		for ( int i = 0 ; i < this.g.n ; i++){
+
 			if ( this.g.deg[i] >= 2 ){
-				
+
 				nb_tri_x = this.triangle(i) ;
+
+				if ( nb_tri_x >= 1 ){
 				
-				sum_tri += nb_tri_x ;
-				calc = ( 2 * nb_tri_x ) ;
+					sum_tri += nb_tri_x ; // pour le global 
 
-				calc /= (float)( ( this.g.deg[i] ) * ( this.g.deg[i] - 1 ) ); // local
+					calc = ( 2 * nb_tri_x ) ;
 
-				sumClust += (float)calc ;
+					calc /= (float)( ( this.g.deg[i] ) * ( this.g.deg[i] - 1 ) ); // local
+
+					sumClust += (float)calc ;
+				}
+
+				/*
+				for (Integer v : g.neighbors(i)) {
+					for (Integer v2 : g.neighbors(v)) {
+						count++ ;
+					}
+				}
+				*/
+
 
 
 			}
 
 		}
 
-		float calcglobal = 3 * nb_tri_x ;
+		/*float calcglobal = 3 * nb_tri_x ;
+		calcglobal /= count ;*/
 				
 		System.out.printf("%.5f\n", (float)(sumClust / this.g.n ) ) ;
-		System.out.printf("%.5f\n", (float)((calcglobal)) ) ;
+		// System.out.printf("%.5f\n", (float)((calcglobal)) ) ;
 	}
 }
