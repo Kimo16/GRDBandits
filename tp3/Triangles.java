@@ -36,7 +36,6 @@ public class Triangles {
 
 	public void cluster(){
 
-		int num_sommet = -1 ;
 		float sumClust = 0 ; 
 		int sum_tri = 0 ;
 		int nb_tri_x = 0 ;
@@ -44,14 +43,15 @@ public class Triangles {
 
 		for ( int i = 0 ; i < this.g.n ; i++){
 			if ( this.g.deg[i] >= 2 ){
+				
 				nb_tri_x = this.triangle(i) ;
 				
 				sum_tri += nb_tri_x ;
 				calc = ( 2 * nb_tri_x ) ;
 
-				calc /= ( this.g.deg[i] ) * ( this.g.deg[i] - 1 ) ; // local
+				calc /= (float)( ( this.g.deg[i] ) * ( this.g.deg[i] - 1 ) ); // local
 
-				sumClust += calc ;
+				sumClust += (float)calc ;
 
 
 			}
