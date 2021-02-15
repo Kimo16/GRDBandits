@@ -56,27 +56,31 @@ public class Triangles {
 
 					calc /= (float)( ( this.g.deg[i] ) * ( this.g.deg[i] - 1 ) ); // local
 
-					sumClust += (float)calc ;
+					sumClust += (float) calc ;
 				}
 
-				/*
+				
 				for (Integer v : g.neighbors(i)) {
 					for (Integer v2 : g.neighbors(v)) {
 						count++ ;
 					}
 				}
-				*/
 
-
-
+			}
+			else if ( this.g.deg[i] == 1 ){
+				for (Integer v : g.neighbors(i)) {
+					for (Integer v2 : g.neighbors(v)) {
+						count++ ;
+					}
+				}
 			}
 
 		}
 
-		/*float calcglobal = 3 * nb_tri_x ;
-		calcglobal /= count ;*/
+		float calcglobal = 3 * sum_tri ;
+		calcglobal /= (float)(count) ;
 				
 		System.out.printf("%.5f\n", (float)(sumClust / this.g.n ) ) ;
-		// System.out.printf("%.5f\n", (float)((calcglobal)) ) ;
+		System.out.printf("%.5f\n", (float)((calcglobal)) ) ;
 	}
 }
