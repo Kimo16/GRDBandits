@@ -41,6 +41,7 @@ public class Triangles {
 		int nb_tri_x = 0 ;
 		float calc = 0 ;
 		int count = 0 ;
+		int deg_temp= 0 ;
 
 		for ( int i = 0 ; i < this.g.n ; i++){
 
@@ -48,7 +49,7 @@ public class Triangles {
 
 				nb_tri_x = this.triangle(i) ;
 
-				if ( nb_tri_x >= 1 ){
+				//if ( nb_tri_x >= 1 ){
 				
 					sum_tri += nb_tri_x ; // pour le global 
 
@@ -57,27 +58,23 @@ public class Triangles {
 					calc /= (float)( ( this.g.deg[i] ) * ( this.g.deg[i] - 1 ) ); // local
 
 					sumClust += (float) calc ;
-				}
+
+				//}
 
 				
-				for (Integer v : g.neighbors(i)) {
-					for (Integer v2 : g.neighbors(v)) {
-						count++ ;
-					}
-				}
+				deg_temp = this.g.deg[i] ;
+				count += (float)( ( deg_temp * ( deg_temp - 1 ) ) / 2 ) ;
+
 
 			}
-			else if ( this.g.deg[i] == 1 ){
-				for (Integer v : g.neighbors(i)) {
-					for (Integer v2 : g.neighbors(v)) {
-						count++ ;
-					}
-				}
+			else {
+				deg_temp = this.g.deg[i] ;
+				count += (float)( ( deg_temp * ( deg_temp - 1 ) ) / 2 ) ;
 			}
 
 		}
 
-		float calcglobal = 3 * sum_tri ;
+		float calcglobal = sum_tri ;
 		calcglobal /= (float)(count) ;
 				
 		System.out.printf("%.5f\n", (float)(sumClust / this.g.n ) ) ;
