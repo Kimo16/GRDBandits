@@ -36,10 +36,10 @@ public class Triangles {
 
 	public void cluster(){
 
-		float sumClust = 0 ; 
+		double sumClust = 0 ; 
 		int sum_tri = 0 ;
 		int nb_tri_x = 0 ;
-		float calc = 0 ;
+		double calc = 0 ;
 		int count = 0 ;
 		int deg_temp= 0 ;
 
@@ -55,29 +55,29 @@ public class Triangles {
 
 					calc = ( 2 * nb_tri_x ) ;
 
-					calc /= (float)( ( this.g.deg[i] ) * ( this.g.deg[i] - 1 ) ); // local
+					calc /= (double)( ( this.g.deg[i] ) * ( this.g.deg[i] - 1 ) ); // local
 
-					sumClust += (float) calc ;
+					sumClust += (double) calc ;
 
 				//}
 
 				
 				deg_temp = this.g.deg[i] ;
-				count += (float)( ( deg_temp * ( deg_temp - 1 ) ) / 2 ) ;
+				count += (double)( ( deg_temp * ( deg_temp - 1 ) ) / 2 ) ;
 
 
 			}
 			else {
 				deg_temp = this.g.deg[i] ;
-				count += (float)( ( deg_temp * ( deg_temp - 1 ) ) / 2 ) ;
+				count += (double)( ( deg_temp * ( deg_temp - 1 ) ) / 2 ) ;
 			}
 
 		}
 
-		float calcglobal = sum_tri ;
-		calcglobal /= (float)(count) ;
+		double calcglobal = sum_tri ;
+		calcglobal /= (double)(count) ;
 				
-		System.out.printf("%.5f\n", (float)(sumClust / this.g.n ) ) ;
-		System.out.printf("%.5f\n", (float)((calcglobal)) ) ;
+		System.out.printf("%.5f\n", (double)(sumClust / this.g.n ) ) ;
+		System.out.printf("%.5f\n", (double)((calcglobal)) ) ;
 	}
 }
