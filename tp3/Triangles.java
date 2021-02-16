@@ -49,28 +49,20 @@ public class Triangles {
 
 				nb_tri_x = this.triangle(i) ;
 
-				//if ( nb_tri_x >= 1 ){
+				if ( nb_tri_x >= 1 ){
 				
 					sum_tri += nb_tri_x ; // pour le global 
 
 					calc = ( 2 * nb_tri_x ) ;
 
-					calc /= (float)( ( this.g.deg[i] ) * ( this.g.deg[i] - 1 ) ); // local
+					calc /= (float) (this.g.deg[i] * ( this.g.deg[i] - 1 )); // local
 
-					sumClust += (float) calc ;
+					sumClust += calc ;
 
-				//}
-
-				
-				deg_temp = this.g.deg[i] ;
-				count += (float)( ( deg_temp * ( deg_temp - 1 ) ) / 2 ) ;
-
-
+				}
 			}
-			else {
-				deg_temp = this.g.deg[i] ;
-				count += (float)( ( deg_temp * ( deg_temp - 1 ) ) / 2 ) ;
-			}
+			
+			count +=  this.g.deg[i] * ( this.g.deg[i] - 1 ) /2 ;
 
 		}
 
