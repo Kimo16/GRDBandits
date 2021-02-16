@@ -8,12 +8,11 @@ public class Triangles {
 	public Triangles(Graph g){
 		this.g = g;
 		voisins_u = new boolean[g.n];
-		
+
 	}
 
 	public long triangle(int u){
 
-		
 		for (Integer v : g.neighbors(u)) {
 			voisins_u[v] = true;
 		}
@@ -57,15 +56,13 @@ public class Triangles {
 					calc /= (double) (this.g.deg[i] * ( this.g.deg[i] - 1 )); // local
 
 					sumClust += calc ;
-
 				}
 			}
-			count +=  this.g.deg[i] * ( this.g.deg[i] - 1 ) /2 ;
+			count +=  this.g.deg[i] * ( this.g.deg[i] - 1 ) /2 ; // pour nv(G)
 		}
-		double calcglobal = sum_tri ;
-		calcglobal /= (double)(count) ;
+		double calcglobal = sum_tri / (double) count ;
 				
-		System.out.printf("%.5f\n", (float)(sumClust / this.g.n ) ) ;
-		System.out.printf("%.5f\n", (float)((calcglobal)) ) ;
+		System.out.printf("%.5f\n", sumClust / this.g.n ) ;
+		System.out.printf("%.5f\n", calcglobal) ;
 	}
 }
