@@ -2,6 +2,11 @@ import java.io.IOException;
 import java.io.FileReader;
 
 public class TP3 {
+
+	private final static String triangles = "triangles";
+	private final static String cluster = "clust";
+
+
 	public static void main(String[] args) throws IOException {
         
         
@@ -13,7 +18,24 @@ public class TP3 {
         
         Graph g = new Graph(edg, true);
 
-		Triangles t = new Triangles(g);
-		System.out.println(t.triangle(Integer.parseInt(args[3])));
+        Triangles t = new Triangles(g);
+
+        switch( args[0] ){
+            case triangles :
+                System.out.println(t.triangle(Integer.parseInt(args[3])));
+                break;
+
+            case cluster :
+            	t.cluster();
+                break;
+
+
+                
+            default :
+                System.out.println(" Not yet implemented ! ");
+        }
+
+
+		
     }
 }
