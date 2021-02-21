@@ -34,7 +34,6 @@ public class Kcoeur {
              	return 0;
              }
         });
-		decomposition();
 	}
 
 
