@@ -27,12 +27,12 @@ public class TP3 {
             case triangles :
                 System.out.println(t.triangle(Integer.parseInt(args[3])));
                 break;
-
             case cluster :
             	t.cluster();
                 break;
             case kcoeur : 
             	k.decomposition();
+            	break;
             default :
                 System.out.println(" Not yet implemented ! ");
         }
