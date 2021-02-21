@@ -5,6 +5,7 @@ public class TP3 {
 
 	private final static String triangles = "triangles";
 	private final static String cluster = "clust";
+	private final static String kcoeur = "k-coeur";
 
 
 	public static void main(String[] args) throws IOException {
@@ -20,6 +21,8 @@ public class TP3 {
 
         Triangles t = new Triangles(g);
 
+        Kcoeur k = new Kcoeur(g);        
+
         switch( args[0] ){
             case triangles :
                 System.out.println(t.triangle(Integer.parseInt(args[3])));
@@ -28,9 +31,8 @@ public class TP3 {
             case cluster :
             	t.cluster();
                 break;
-
-
-                
+            case kcoeur : 
+            	k.decomposition();
             default :
                 System.out.println(" Not yet implemented ! ");
         }
