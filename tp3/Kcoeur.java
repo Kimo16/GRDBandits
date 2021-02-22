@@ -70,8 +70,7 @@ public class Kcoeur {
 		fillQueue();
 		int k =0;
 		int pred = 0;
-		for(; k < n-1; k++){
-			
+		for(; k < n; k++){
 			if( !this.pq.isEmpty() && (this.pq.peek().getValue() < k) ){
 				pred = this.pq.size(); 
 				decompositionAux(k);
@@ -79,10 +78,12 @@ public class Kcoeur {
 				if( this.pq.isEmpty()){
 					System.out.println((k-1));
 					System.out.println(pred);
-					break;
+					return;
 				}
 			}
 		}
+		System.out.println((k-1));
+		System.out.println(this.pq.size());
 	}
 	private void decompositionAux( int k)
 	{
