@@ -49,7 +49,9 @@ class Graph implements Iterable<Integer> {
     public int degree(int u) {
         return offset[u+1] - offset[u];
     }
-
+    public int getN(){
+        return this.n;
+    }
     // to iterate on nodes:
     public Iterator<Integer> iterator() {
         return IntStream.range(0, n).iterator();
