@@ -36,6 +36,19 @@ public class TP4 {
                     System.out.println(""+r[i]+'\t'+r[i+1]);
                 }
                 break;
+
+
+            case "puissance":
+                int n = Integer.parseInt(args[1]);
+                double gamma = Double.parseDouble(args[2]);
+
+                Integer[] p = puissanceFunc(n,gamma);
+
+                for ( int i = 0 ; i < p.length ; i+=2 )
+                {
+                    System.out.println(""+p[i]+'\t'+p[i+1]);
+                }
+                break;
                
             default :
                 System.out.println(" Not yet implemented ! ");
@@ -102,5 +115,72 @@ public class TP4 {
         Integer[] e = exempleFunc(deg);
 
         return e ;
+    }
+    public static Integer[] puissanceFunc(int n, double gamma){
+        int[] deg = new int[n];
+
+        double[] nb_occ_deg_k = new double[n];
+
+        double sum=0;
+
+        for(int i=1; i<nb_occ_deg_k.length;i++){
+            
+            nb_occ_deg_k[i] = Math.pow(i, -gamma);
+
+            sum+=nb_occ_deg_k[i];
+            
+        }
+        double c = 1 / sum;
+        for (int i = 0; i < nb_occ_deg_k.length; i++) {
+            
+            nb_occ_deg_k[i] *= c;
+        }
+
+        int sum2=0;
+        for (int i = 1; i < nb_occ_deg_k.length; i++) {
+
+            nb_occ_deg_k[i] = (int) Math.round(nb_occ_deg_k[i]*n);
+            
+            sum2+=nb_occ_deg_k[i];
+        }
+
+        int sum3=0;
+        int cpt = 0  ;
+        for(int k=1; k < nb_occ_deg_k.length;k++){
+            
+            for( int i=0; i < nb_occ_deg_k[k]; i++){
+                deg[cpt] = k;
+                sum3+= k;
+                cpt++;
+            }
+        }
+        if( sum3 %2 == 1 )
+        {   
+            sum3++;
+            deg[cpt]++;
+        }
+
+
+        
+        Integer[] E = new Integer[sum3];
+        cpt = 0  ;
+
+        for ( int j = 0  ; j < deg.length ; j++ )
+        {
+            for ( int i = 0 ; i < deg[j] ;i++ )
+            {
+                E[cpt] = j ;
+                cpt++ ;
+            }
+        }
+
+        List<Integer> intList = Arrays.asList(E);
+
+        Collections.shuffle(intList);
+
+        
+
+        return intList.toArray(E);
+        
     }
 }
