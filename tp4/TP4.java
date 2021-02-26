@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class TP4 {
 
@@ -49,7 +50,10 @@ public class TP4 {
                     System.out.println(""+p[i]+'\t'+p[i+1]);
                 }
                 break;
-               
+            case "cluster":
+                clusterFunc();
+                break;
+
             default :
                 System.out.println(" Not yet implemented ! ");
         }
@@ -182,5 +186,67 @@ public class TP4 {
 
         return intList.toArray(E);
         
+    }
+
+
+    public static void clusterFunc(){
+        int []tab_n = {100,1000,10000,100000};
+        double []tab_gamma = {2.1, 2.3, 2.5, 2.7};
+        /*Integer []p = puissanceFunc(100, tab_gamma[i]);
+        try {
+
+            FileWriter myWriter = new FileWriter("edges.txt");
+            for ( int i = 0 ; i < p.length ; i+=2 )
+            {
+                
+                myWriter.write(""+p[i]+'\t'+p[i+1]);
+                //System.out.println(""+p[i]+'\t'+p[i+1]);
+
+            }
+            myWriter.close();
+          System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+          System.out.println("An error occurred.");
+          e.printStackTrace();
+        }*/
+        
+        for(int i = 0; i < tab_n.length; i++){
+            for(int j = 0; j < tab_n.length; j++){
+                
+                Integer []p = puissanceFunc(tab_n[i], tab_gamma[i]);
+                System.out.println("n : "+tab_n[i]+ " gamma : "+ tab_gamma[i]);
+                try {
+
+                    FileWriter myWriter = new FileWriter("edges.txt");
+                    for ( int k = 0 ; k < p.length ; k+=2 )
+                    {
+                        // fill file 
+                        myWriter.write(""+p[k]+'\t'+p[k+1] +"\n");
+                        //System.out.println(""+p[i]+'\t'+p[i+1]);
+
+                    }
+                    myWriter.close();
+                  System.out.println("Successfully wrote to the file.");
+                } catch (IOException e) {
+                  System.out.println("An error occurred.");
+                  e.printStackTrace();
+                }
+
+                //int m_max = Integer.parseInt(args[2]);
+                
+                Edges edg = new Edges();
+                try{
+                    edg.add(new FileReader("edges.txt"), p.length);        
+                }catch(Exception e){
+                    System.out.println("An error occurred.");
+                  e.printStackTrace();
+                }
+                
+                Graph g = new Graph(edg, true);
+
+                Triangles t = new Triangles(g);
+                t.cluster();
+            }
+        }
     }
 }
