@@ -19,32 +19,22 @@ public class TP4 {
 
             case "exemple" :
                 int[] deg = {1, 2, 1, 4};
-                int sum = 0 ;
-                for ( int elt : deg )
-                    sum += elt ;
-                Integer[] E = new Integer[sum];
-                int cpt = 0  ;
+                Integer[] e = exempleFunc(deg);
 
-                for ( int j = 0  ; j < deg.length ; j++ ){
-                    for ( int i = 0 ; i < deg[j] ;i++ ){
-                        E[cpt] = j ;
-                        cpt++ ;
-                    }
+                for ( int i = 0 ; i < e.length ; i+=2 )
+                {
+                    System.out.println(""+e[i]+'\t'+e[i+1]); 
                 }
-                List<Integer> intList = Arrays.asList(E);
 
-		        Collections.shuffle(intList);
+                break;
 
-		        intList.toArray(E);
-
-		        //System.out.println(Arrays.toString(E));
-
-                for ( int i = 0 ; i < E.length ; i+=2 )
-                    System.out.println(""+E[i]+'\t'+E[i+1]); 
-
-
+            case "racine":
+                Integer[] r = racineFunc(Integer.parseInt(args[1]));
                 
-
+                for ( int i = 0 ; i < r.length ; i+=2 )
+                {
+                    System.out.println(""+r[i]+'\t'+r[i+1]);
+                }
                 break;
                
             default :
@@ -52,5 +42,65 @@ public class TP4 {
         }
 
 	
+    }
+
+
+
+    public static Integer[] exempleFunc( int [] deg)
+    {
+        int sum = 0 ;
+        
+        for ( int elt : deg )
+        {
+            sum += elt ;
+        }
+
+        Integer[] E = new Integer[sum];
+        int cpt = 0  ;
+
+        for ( int j = 0  ; j < deg.length ; j++ )
+        {
+            for ( int i = 0 ; i < deg[j] ;i++ )
+            {
+                E[cpt] = j ;
+                cpt++ ;
+            }
+        }
+
+        List<Integer> intList = Arrays.asList(E);
+
+        Collections.shuffle(intList);
+
+        
+
+        return intList.toArray(E);
+
+    }
+
+
+    public static Integer[] racineFunc(int n )
+    {
+        int[] deg = new int [n];
+        
+        for ( int i = 0 ; i < deg.length ; i++)
+        {
+            deg[i] = ((int) Math.sqrt(i + 1.));
+        }
+
+        int sum = 0;
+        
+        for( int elt : deg)
+        {
+            sum += elt;
+        }
+
+        if( sum %2 == 1 )
+        {
+            deg[deg.length -1 ] += 1 ;
+        }
+
+        Integer[] e = exempleFunc(deg);
+
+        return e ;
     }
 }
